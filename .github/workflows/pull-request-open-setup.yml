@@ -1,0 +1,23 @@
+name: Add Labels to PRs
+
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  setup-pull-request:
+    runs-on: rl-terrarunner
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Add Label To PR
+        uses: cv-library/gitflow-pull-request-labels@main
+        with:
+          docker-user: ${{ secrets.DEPLOYERCVL_PAT }}
+
+      - name: add pr assignment
+        uses: cv-library/action-pr-assignment@main
+        with:
+          deployer-cvl-pat: ${{ secrets.DEPLOYERCVL_PAT }}
